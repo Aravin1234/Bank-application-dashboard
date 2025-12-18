@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUB Bank - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="images/icon.png">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="images/logo.png" alt="CUB Bank Logo" class="nav-logo">
+                <span>CUB Bank</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#" class="nav-link" data-page="corporate">Corporate</a></li>
+                <li><a href="#" class="nav-link" data-page="account-status">Account</a></li>
+                <li><a href="#" class="nav-link" data-page="grievance">Grievance</a></li>
+                <li><a href="#" class="nav-link" data-page="careers">Careers</a></li>
+                <li><a href="#" class="nav-link" data-page="login-section">Login</a></li>
+            </ul>
+            <div class="nav-user">
+                <span id="currentUser"></span>
+                <button id="logoutBtn" class="btn btn-secondary">Logout</button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="dashboard-container">
+        <main class="main-content">
+            <!-- Home Page with Carousel -->
+            <div id="home" class="page active">
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slides" id="carouselSlides">
+                            <div class="carousel-slide active">
+                                <img src="images/CUB all in one app.jpg" alt="CUB All in One App">
+                                <div class="carousel-caption">
+                                    <h2>Banking Made Simple</h2>
+                                    <p>Access all your banking needs in one place</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/CUB savings account.jpg" alt="CUB Savings Account">
+                                <div class="carousel-caption">
+                                    <h2>Savings Accounts</h2>
+                                    <p>Start your savings journey with competitive interest rates</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/Types of Savings Account.jpg" alt="Types of Savings Account">
+                                <div class="carousel-caption">
+                                    <h2>Multiple Account Options</h2>
+                                    <p>Choose from various savings account types</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/cub customer care.jpg" alt="Customer Care">
+                                <div class="carousel-caption">
+                                    <h2>24/7 Customer Support</h2>
+                                    <p>We're here to help you anytime, anywhere</p>
+                                </div>
+                            </div>
+                            <div class="carousel-slide">
+                                <img src="images/CUB all in one app 2.jpg" alt="Banking Services">
+                                <div class="carousel-caption">
+                                    <h2>Loans & Insurance</h2>
+                                    <p>Get the best deals on loans and insurance products</p>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="carousel-btn carousel-prev" id="carouselPrev">&#8249;</button>
+                        <button class="carousel-btn carousel-next" id="carouselNext">&#8250;</button>
+                        <div class="carousel-indicators" id="carouselIndicators"></div>
+                    </div>
+                </div>
+                
+                <div class="home-content">
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🏦</div>
+                            <h3>Bank Status</h3>
+                            <p>Check your account balance and transaction history instantly</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💰</div>
+                            <h3>Loans</h3>
+                            <p>Personal loans, home loans, and more with competitive rates</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🛡️</div>
+                            <h3>Insurance</h3>
+                            <p>Protect what matters most with comprehensive insurance plans</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💳</div>
+                            <h3>Credit Cards</h3>
+                            <p>Rewards and benefits with our premium credit card options</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account Status Page -->
+            <div id="account-status" class="page active">
+                <div class="page-header">
+                    <h2>Account Status</h2>
+                    <p>View your account information and balance</p>
+                </div>
+                
+                <div class="account-cards">
+                    <div class="account-card">
+                        <div class="card-header">
+                            <h3>Primary Account</h3>
+                            <span class="account-type">Savings</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="balance-info">
+                                <p class="balance-label">Account Balance</p>
+                                <p class="balance-amount" id="primaryBalance">₹0.00</p>
+                            </div>
+                            <div class="account-details">
+                                <p><strong>Account Number:</strong> <span id="primaryAccountNumber">-</span></p>
+                                <p><strong>Account Holder:</strong> <span id="primaryAccountHolder">-</span></p>
+                                <p><strong>Status:</strong> <span class="status-badge active">Active</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accounts-list" id="accountsList">
+                    <h3>All Accounts</h3>
+                    <div id="accountsContainer"></div>
+                </div>
+            </div>
+            
+            <!-- Manage Accounts Page -->
+            <div id="manage-accounts" class="page">
+                <div class="page-header">
+                    <h2>Manage Accounts</h2>
+                    <p>Create, update, or delete your accounts</p>
+                </div>
+                
+                <div class="crud-section">
+                    <div class="crud-form">
+                        <h3 id="formTitle">Create New Account</h3>
+                        <form id="accountForm">
+                            <input type="hidden" id="accountId" name="accountId">
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="accountName">Account Name</label>
+                                    <input type="text" id="accountName" name="accountName" required placeholder="e.g., Savings Account">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="accountType">Account Type</label>
+                                    <select id="accountType" name="accountType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Savings">Savings</option>
+                                        <option value="Current">Current</option>
+                                        <option value="Fixed Deposit">Fixed Deposit</option>
+                                        <option value="Recurring Deposit">Recurring Deposit</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="accountNumber">Account Number</label>
+                                    <input type="text" id="accountNumber" name="accountNumber" required placeholder="Enter account number">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="balance">Initial Balance (₹)</label>
+                                    <input type="number" id="balance" name="balance" step="0.01" min="0" required placeholder="0.00">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <textarea id="description" name="description" rows="3" placeholder="Optional description"></textarea>
+                            </div>
+                            
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" id="submitBtn">Create Account</button>
+                                <button type="button" class="btn btn-secondary" id="cancelBtn" style="display: none;">Cancel</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <div class="crud-list">
+                        <h3>Your Accounts</h3>
+                        <div id="accountsTableContainer">
+                            <table class="accounts-table">
+                                <thead>
+                                    <tr>
+                                        <th>Account Name</th>
+                                        <th>Type</th>
+                                        <th>Account Number</th>
+                                        <th>Balance</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="accountsTableBody">
+                                    <!-- Accounts will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Transactions Page -->
+            <div id="transactions" class="page">
+                <div class="page-header">
+                    <h2>Transactions</h2>
+                    <p>View your transaction history</p>
+                </div>
+                
+                <div class="transactions-section">
+                    <div class="transaction-form">
+                        <h3>Add Transaction</h3>
+                        <form id="transactionForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transAccount">Select Account</label>
+                                    <select id="transAccount" name="transAccount" required>
+                                        <option value="">Select Account</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="transType">Transaction Type</label>
+                                    <select id="transType" name="transType" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Deposit">Deposit</option>
+                                        <option value="Withdrawal">Withdrawal</option>
+                                        <option value="Transfer">Transfer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="transAmount">Amount (₹)</label>
+                                    <input type="number" id="transAmount" name="transAmount" step="0.01" min="0.01" required placeholder="0.00">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="transDate">Date</label>
+                                    <input type="date" id="transDate" name="transDate" required>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="transDescription">Description</label>
+                                <textarea id="transDescription" name="transDescription" rows="2" placeholder="Transaction description"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-primary">Add Transaction</button>
+                        </form>
+                    </div>
+                    
+                    <div class="transactions-list">
+                        <h3>Transaction History</h3>
+                        <div id="transactionsContainer">
+                            <!-- Transactions will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Corporate Page -->
+            <div id="corporate" class="page">
+                <div class="page-header">
+                    <h2>Corporate Banking</h2>
+                    <p>Comprehensive banking solutions for businesses</p>
+                </div>
+                <div class="corporate-content">
+                    <div class="info-section">
+                        <h3>Our Corporate Services</h3>
+                        <ul class="service-list">
+                            <li>Corporate Accounts & Cash Management</li>
+                            <li>Trade Finance & Foreign Exchange</li>
+                            <li>Working Capital Finance</li>
+                            <li>Term Loans & Project Finance</li>
+                            <li>Corporate Credit Cards</li>
+                            <li>Online Banking for Businesses</li>
+                        </ul>
+                    </div>
+                    <div class="info-section">
+                        <h3>Why Choose CUB Bank?</h3>
+                        <p>We understand the unique needs of businesses and offer tailored solutions to help you grow. Our corporate banking team is dedicated to providing exceptional service and support.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grievance Page -->
+            <div id="grievance" class="page">
+                <div class="page-header">
+                    <h2>Grievance Redressal</h2>
+                    <p>We're here to help resolve your concerns</p>
+                </div>
+                <div class="grievance-content">
+                    <div class="grievance-form-section">
+                        <h3>File a Grievance</h3>
+                        <form id="grievanceForm">
+                            <div class="form-group">
+                                <label for="grievanceType">Type of Grievance</label>
+                                <select id="grievanceType" name="grievanceType" required>
+                                    <option value="">Select Type</option>
+                                    <option value="Account Related">Account Related</option>
+                                    <option value="Transaction Issue">Transaction Issue</option>
+                                    <option value="Loan Related">Loan Related</option>
+                                    <option value="Service Complaint">Service Complaint</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="grievanceSubject">Subject</label>
+                                <input type="text" id="grievanceSubject" name="grievanceSubject" required placeholder="Brief description of your issue">
+                            </div>
+                            <div class="form-group">
+                                <label for="grievanceDescription">Description</label>
+                                <textarea id="grievanceDescription" name="grievanceDescription" rows="6" required placeholder="Please provide detailed information about your grievance"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Grievance</button>
+                        </form>
+                    </div>
+                    <div class="grievance-info-section">
+                        <h3>Contact Information</h3>
+                        <div class="contact-info">
+                            <p><strong>Customer Care:</strong> 1800-XXX-XXXX</p>
+                            <p><strong>Email:</strong> grievance@cubbank.com</p>
+                            <p><strong>Address:</strong> CUB Bank Head Office, Banking Street, Financial District</p>
+                        </div>
+                        <div class="grievance-status" id="grievanceStatus"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Careers Page -->
+            <div id="careers" class="page">
+                <div class="page-header">
+                    <h2>Careers at CUB Bank</h2>
+                    <p>Join our team and build your career with us</p>
+                </div>
+                <div class="careers-content">
+                    <div class="careers-intro">
+                        <h3>Why Work With Us?</h3>
+                        <p>CUB Bank is committed to fostering a culture of innovation, growth, and excellence. We offer competitive compensation, comprehensive benefits, and opportunities for professional development.</p>
+                    </div>
+                    <div class="job-openings">
+                        <h3>Current Openings</h3>
+                        <div class="job-list">
+                            <div class="job-card">
+                                <h4>Relationship Manager</h4>
+                                <p><strong>Location:</strong> Multiple Locations</p>
+                                <p><strong>Experience:</strong> 2-5 years</p>
+                                <button class="btn btn-primary">Apply Now</button>
+                            </div>
+                            <div class="job-card">
+                                <h4>Software Developer</h4>
+                                <p><strong>Location:</strong> IT Hub, Bangalore</p>
+                                <p><strong>Experience:</strong> 3-7 years</p>
+                                <button class="btn btn-primary">Apply Now</button>
+                            </div>
+                            <div class="job-card">
+                                <h4>Customer Service Executive</h4>
+                                <p><strong>Location:</strong> Call Center, Mumbai</p>
+                                <p><strong>Experience:</strong> 1-3 years</p>
+                                <button class="btn btn-primary">Apply Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Login Section Page -->
+            <div id="login-section" class="page">
+                <div class="page-header">
+                    <h2>Account Management</h2>
+                    <p>Manage your accounts and transactions</p>
+                </div>
+                <div class="login-section-content">
+                    <div class="account-quick-links">
+                        <div class="quick-link-card" onclick="window.dashboardManager.switchPage('account-status')">
+                            <div class="quick-link-icon">📊</div>
+                            <h3>Account Status</h3>
+                            <p>View your account balance and details</p>
+                        </div>
+                        <div class="quick-link-card" onclick="window.dashboardManager.switchPage('manage-accounts')">
+                            <div class="quick-link-icon">⚙️</div>
+                            <h3>Manage Accounts</h3>
+                            <p>Create, edit, or delete accounts</p>
+                        </div>
+                        <div class="quick-link-card" onclick="window.dashboardManager.switchPage('transactions')">
+                            <div class="quick-link-icon">💸</div>
+                            <h3>Transactions</h3>
+                            <p>View and add transactions</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script src="auth.js"></script>
+    <script src="carousel.js"></script>
+    <script src="dashboard.js"></script>
+    <script src="accounts.js"></script>
+    <script src="transactions.js"></script>
+</body>
+</html>
+
